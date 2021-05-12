@@ -7,18 +7,25 @@ import (
 )
 
 func main() {
-	engine := gin.Default()
-	//
-	engine.GET("/", func(context *gin.Context) {
+	server := gin.Default()
+
+	//UserAgentを取得するミドルウェアの使用
+	ua := ""
+	server.Use(func(c *gin.Context) {
+		ua = c.GetHeader("User-Agent")
+		c.Next()
+	})
+	server.GET("/", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
-			"message": "hello world This is gin server",
+			"message":    "hello world This is gin server",
+			"User Agent": ua,
 		})
 	})
 
-	engine.GET("/test", func(context *gin.Context) {
+	server.GET("/test", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
 			"test": "OK"})
 	})
 
-	engine.Run(":3000")
+	server.Run(":3000")
 }
