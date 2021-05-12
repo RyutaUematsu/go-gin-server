@@ -12,3 +12,5 @@ import ("github.com/gin-gonic/gin"
 )
 
 ```
+
+## go modでファイルはVScodeで開いてるrootに置かないと認識してくれない
